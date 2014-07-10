@@ -124,9 +124,11 @@ class WP_Conditional_Content {
 		elseif ( ! is_user_logged_in() )
 			return false;
 
-		# Return wether current user role matches 
-		if( $this->check_value( $role, $this->get_current_user_role() ) )
-			return true;
+		# Return whether current user has desired role
+		$currentUser = wp_get_current_user();
+    		return in_array($role, $currentUser->roles); 
+		// if( $this->check_value( $role, $this->get_current_user_role() ) )
+		// 	return true;
 
 		return false;
 
@@ -170,18 +172,26 @@ class WP_Conditional_Content {
 	 * Get the role of the current logged in user
 	 *
 	 */
-	private function get_current_user_role() {
+	// private function get_current_user_role() {
 
-		# Get current user object
-		$current_user = wp_get_current_user();
+	// 	$roles = '';
 
-		# Get first available role
-		if ( ! empty( $current_user->roles ) )
-			return array_shift( $current_user->roles );
+	// 	# Get current user object
+	// 	$current_user = wp_get_current_user();
 
-		return false;
+	// 	# Get all roles
+	// 	if ( sizeof( $current_user->roles ) >= 1 ) {
+	// 		foreach ($current_user->roles as $role) {
+	//     			$roles .= $role;
+	//     			$roles .= ";";
+	//   		}
+ // 		return rtrim($roles, ";");
+	// 	}
+	// 		//return array_shift( $current_user->roles );
 
-	}
+	// 	return false;
+
+	// }
 
 
 }
